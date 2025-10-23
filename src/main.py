@@ -1,7 +1,13 @@
-import os 
+from utils import  *
+from files import  *
+from animals import  *
+from inputs import  *
+from plants import  *
+from reports import  *
+from movements import  *
 
-def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
+
+
 
 
 def menu():
