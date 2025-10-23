@@ -86,4 +86,4 @@ def update_status():
             print('Status atualizado com sucesso!')
             return
 
-    print('Animal não encontradi')
+    print('Animal não encontrado')
