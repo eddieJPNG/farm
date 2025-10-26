@@ -1,35 +1,20 @@
+from files import load_json, save_json
 
-# animals.py
-# Cadastro simples de animais para uma fazenda digital
+# ==============================================================
+# Script: animals.py
+# Descrição: Módulo para gerenciamento de animais da fazenda digital.
+# Contém funções para cadastro, listagem, busca e atualização de animais.
+# ==============================================================
 
-import json
-
-# Caminho do arquivo onde os dados dos animais serão salvos
-file_path = 'data/animals.json'
-
-# Função para carregar os animais do arquivo
-def load_animals():
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            animals = json.load(file)
-    except:
-        animals = []
-    return animals
-
-# Função para salvar os animais no arquivo
-def save_animals(animals):
-    with open(file_path, 'w', encoding='utf-8') as file:
-        json.dump(animals, file, indent=4, ensure_ascii=False)
-
-# Função para cadastrar um novo animal
 def register_animal():
-    animals = load_animals()
+    """Cadastra um novo animal no sistema."""
+    animals = load_json("animals.json")
 
     print('=== Cadastro de Animal ===')
     animal_id = input('ID do animal: ')
     species = input('Espécie (ex: bovino, caprino): ')
-    age = input('Idade: ')
-    weight = input('Peso (kg): ')
+    age = float(input('Idade: '))
+    weight = float(input('Peso (kg): '))
     status = input('Status (active, sold, dead): ')
 
     new_animal = {
@@ -41,49 +26,79 @@ def register_animal():
     }
 
     animals.append(new_animal)
-    save_animals(animals)
+    save_json("animals.json", animals)
     print('Animal cadastrado com sucesso!')
 
-# Função para listar todos os animais
 def list_animals():
-    animals = load_animals()
+    """Lista todos os animais cadastrados."""
+    animals = load_json("animals.json")
 
-    if len(animals) == 0:
+    if not animals:
         print('Nenhum animal cadastrado.')
         return
 
     print('=== Lista de Animais ===')
     for animal in animals:
-        print(f'ID: {animal['id']}, Espécie: {animal['species']}, Idade: {animal['age']}, Peso: {animal['weight']}kg, Status: {animal['status']}')
+        print(f"ID: {animal['id']}, "
+              f"Espécie: {animal['species']}, "
+              f"Idade: {animal['age']}, "
+              f"Peso: {animal['weight']}kg, "
+              f"Status: {animal['status']}")
 
-# Função para buscar um animal pelo ID
 def search_animal():
-    animals = load_animals()
+    """Busca um animal pelo ID."""
+    animals = load_json("animals.json")
     search_id = input('Digite o ID do animal: ')
 
     for animal in animals:
         if animal['id'] == search_id:
             print('=== Animal Encontrado ===')
-            print(f'ID: {animal['id']}')
-            print(f'Espécie: {animal['species']}')
-            print(f'Idade: {animal['age']}')
-            print(f'Peso: {animal['weight']}kg')
-            print(f'Status: {animal['status']}')
+            print(f"ID: {animal['id']}")
+            print(f"Espécie: {animal['species']}")
+            print(f"Idade: {animal['age']}")
+            print(f"Peso: {animal['weight']}kg")
+            print(f"Status: {animal['status']}")
             return
 
     print('Animal não encontrado.')
 
-# Função para atualizar o status de um animal
 def update_status():
-    animals = load_animals()
+    """Atualiza o status de um animal específico."""
+    animals = load_json("animals.json")
     search_id = input('Digite o ID do animal para atualizar: ')
 
     for animal in animals:
         if animal["id"] == search_id:
             new_status = input('Novo status (active, sold, dead): ')
             animal['status'] = new_status
-            save_animals(animals)
+            save_json("animals.json", animals)
             print('Status atualizado com sucesso!')
             return
 
     print('Animal não encontrado')
+
+def animals_menu():
+    """Menu principal do módulo de animais."""
+    while True:
+        print("\n=== MENU ANIMAIS ===")
+        print("1. Cadastrar animal")
+        print("2. Listar animais")
+        print("3. Buscar animal")
+        print("4. Atualizar status")
+        print("0. Voltar ao menu principal")
+
+        option = input("Escolha uma opção: ")
+
+        match option:
+            case "1":
+                register_animal()
+            case "2":
+                list_animals()
+            case "3":
+                search_animal()
+            case "4":
+                update_status()
+            case "0":
+                break
+            case _:
+                print("Opção inválida!")

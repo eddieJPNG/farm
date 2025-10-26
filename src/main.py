@@ -13,7 +13,7 @@ from movements import  *
 def menu():
     while True:
 
-        clear_screen()
+        # clear_screen()
         print("\nSISTEMA DE FAZENDA DIGITAL EM  PHYTON")
         print("1.Animais")
         print("2.Plantações")
