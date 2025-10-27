@@ -15,7 +15,7 @@ def register_animal():
     species = input('Espécie (ex: bovino, caprino): ')
     age = float(input('Idade: '))
     weight = float(input('Peso (kg): '))
-    status = input('Status (active, sold, dead): ')
+    status = input('Status (Ativo, Vendido, Morto): ')
 
     new_animal = {
         'id': animal_id,
