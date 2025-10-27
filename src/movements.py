@@ -1,46 +1,58 @@
-# ==============================================================
-# Script: movements.py
-# Descrição: Este arquivo faz parte do sistema de controle da fazenda.
-# Ele contém funções e classes para gerenciar entidades e operações específicas.
-# ==============================================================
+from files import load_json, save_json
+from datetime import datetime
 
-# Importação de módulos necessários
-from files import *
-from datetime import datetime, date, time, timedelta
-
-
-# Função responsável por: menu movimentos
 def movements_menu():
     while True:
-        print("\nMENU DE MOVIMENTAÇÕES")
-        print("1. Registrar movimentação")
-        print("2. Listar movimentações")
-        print("3. Voltar")
-        op = input("Escolha: ")
-        if op == "1":
-            registrar_movimento()
-        elif op == "2":
-            listar_movimentos()
-        elif op == "3":
+        print("\nMOVEMENTS MENU")
+        print("1. Register movement")
+        print("2. List movements")
+        print("3. Back")
+
+        choice = input("Choose: ")
+
+        if choice == "1":
+            register_movement()
+        elif choice == "2":
+            list_movements()
+        elif choice == "3":
             break
+        else:
+            print("Invalid option.")
 
-# Função responsável por: registrar movimento
-def registrar_movimento():
-    data = load_json("movements.json")
-    tipo = input("Tipo (Venda/Colheita/Consumo): ")
-    descricao = input("Descrição: ")
-    valor = input("Valor ou quantidade: ")
+def register_movement():
+    try:
+        data = load_json("movements.json")
 
-    data_atual = str(datetime.now())
-    data.append({"tipo": tipo, "descricao": descricao, "valor": valor,"data": data_atual,})
-    save_json("movements.json", data)
-    print("✅ Movimentação registrada!")
+        type_m = input("Type (Sale/Harvest/Consume): ")
+        description = input("Description: ")
+        value = input("Value or quantity: ")
 
-# Função responsável por: listar movimentos
-def listar_movimentos():
-    data = load_json("movements.json")
-    if not data:
-        print("Nenhuma movimentação registrada.")
-    else:
+        movement = {
+            "type": type_m,
+            "description": description,
+            "value": value,
+            "date": datetime.now().strftime("%d/%m/%Y %H:%M")
+        }
+
+        data.append(movement)
+        save_json("movements.json", data)
+
+        print("✅ Movement registered successfully.")
+
+    except Exception as e:
+        print(f"Error while registering movement: {e}")
+
+def list_movements():
+    try:
+        data = load_json("movements.json")
+
+        if not data:
+            print("No movements registered.")
+            return
+
+        print("\n--- MOVEMENTS ---")
         for m in data:
-            print(f"- {m['tipo']}: {m['descricao']} ({m['valor']})")
+            print(f"{m['date']} - {m['type']}: {m['description']} ({m['value']})")
+
+    except Exception as e:
+        print(f"Error while listing movements: {e}")

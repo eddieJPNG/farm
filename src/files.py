@@ -1,16 +1,12 @@
 import json
 import os
 
-# ==============================================================
-# Script: files.py
-# Descrição: Este arquivo faz parte do sistema de controle da fazenda.
-# Ele contém funções e classes para gerenciar entidades e operações específicas.
-# ==============================================================
+
 
 DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data")
 
 def load_json(filename):
-    """Carrega dados de um arquivo JSON."""
+    
     path = os.path.join(DATA_PATH, filename)
     
     try:
@@ -26,9 +22,9 @@ def load_json(filename):
         return []
 
 def save_json(filename, data):
-    """Salva dados em um arquivo JSON."""
+    
     try:
-        # Garante que o diretório data existe
+        
         if not os.path.exists(DATA_PATH):
             os.makedirs(DATA_PATH)
             
@@ -38,10 +34,3 @@ def save_json(filename, data):
     except OSError as e:
         print(f"Erro ao salvar {filename}: {e}")
 
-# Remova ou comente o código de teste abaixo
-# d = {
-#     "b": "Oi",
-#     "a": "hey",
-# }
-# save_json("plants.json", d)
-# print(load_json("plants.json"))
