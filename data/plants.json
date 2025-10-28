@@ -6,5 +6,13 @@
         "planting_date": "2025-02-07",
         "harvest_date": "2025-06-07",
         "status": "inativo"
+    },
+    {
+        "id": "p002",
+        "crop_type": "soja",
+        "area": 33.0,
+        "planting_date": "2025-02-03",
+        "harvest_date": "2025-07-03",
+        "status": "planted"
     }
 ]

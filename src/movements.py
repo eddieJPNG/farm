@@ -3,12 +3,12 @@ from datetime import datetime
 
 def movements_menu():
     while True:
-        print("\nMOVEMENTS MENU")
-        print("1. Register movement")
-        print("2. List movements")
-        print("3. Back")
+        print("\nMENU MOVIMENTAÇÕES")
+        print("1. Registrar movimentações")
+        print("2. Listar movimentações")
+        print("3. Sair")
 
-        choice = input("Choose: ")
+        choice = input("Escolha uma opção: ")
 
         if choice == "1":
             register_movement()
@@ -17,15 +17,15 @@ def movements_menu():
         elif choice == "3":
             break
         else:
-            print("Invalid option.")
+            print("Opção inválida")
 
 def register_movement():
     try:
         data = load_json("movements.json")
 
-        type_m = input("Type (Sale/Harvest/Consume): ")
-        description = input("Description: ")
-        value = input("Value or quantity: ")
+        type_m = input("Tipo (Venda/Colheita/Consumo): ")
+        description = input("Descrição: ")
+        value = input("Valor ou Quantidade: ")
 
         movement = {
             "type": type_m,
@@ -37,17 +37,17 @@ def register_movement():
         data.append(movement)
         save_json("movements.json", data)
 
-        print("✅ Movement registered successfully.")
+        print("✅ Movimentação foi registrada com sucesso!")
 
     except Exception as e:
-        print(f"Error while registering movement: {e}")
+        print(f"Erro durante o registro de uma movimentação: {e}")
 
 def list_movements():
     try:
         data = load_json("movements.json")
 
         if not data:
-            print("No movements registered.")
+            print("Sem movimentações no momento.")
             return
 
         print("\n--- MOVEMENTS ---")
@@ -55,4 +55,4 @@ def list_movements():
             print(f"{m['date']} - {m['type']}: {m['description']} ({m['value']})")
 
     except Exception as e:
-        print(f"Error while listing movements: {e}")
+        print(f"Erro durante a listagem de uma movimentação: {e}")

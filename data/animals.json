@@ -1,9 +1,16 @@
 [
     {
-        "id": "9999",
+        "id": "2222",
+        "species": "bovino",
+        "age": "3",
+        "weight": "55",
+        "status": "ativo"
+    },
+    {
+        "id": "3333",
         "species": "bovino",
         "age": "2",
-        "weight": "24",
-        "status": "Vivo"
+        "weight": "22",
+        "status": "ativo"
     }
 ]

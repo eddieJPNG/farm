@@ -4,22 +4,13 @@ from files import load_json, save_json
 # animals.py
 import json
 
-file_path = 'data/animals.json'
-
-def load_animals():
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            animals = json.load(file)
-    except:
-        animals = []
-    return animals
 
 def save_animals(animals):
-    with open(file_path, 'w', encoding='utf-8') as file:
+    with open(animals, 'w', encoding='utf-8') as file:
         json.dump(animals, file, indent=4, ensure_ascii=False)
 
 def register_animal():
-    animals = load_animals()
+    animals = load_json("animals.json")
 
     print('=== Cadastro de Animal ===')
     animal_id = input('ID do animal: ')

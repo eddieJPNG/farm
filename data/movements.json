@@ -4,5 +4,17 @@
         "descricao": "Teste de consumo das vacas",
         "valor": "60kg",
         "data": "2025-10-27 03:16:12.922921"
+    },
+    {
+        "type": "Venda",
+        "description": "Vendi juninho para seu zé",
+        "value": "500,00",
+        "date": "27/10/2025 23:46"
+    },
+    {
+        "type": "Colheita",
+        "description": "Colheita de milho com o pessoal",
+        "value": "2 hectáries",
+        "date": "27/10/2025 23:48"
     }
 ]

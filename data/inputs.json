@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "id": "9999",
+        "name": "XVII",
+        "quantity": 6.0,
+        "unit": "L",
+        "category": "outro"
+    },
+    {
+        "id": "6666",
+        "name": "Verdinha",
+        "quantity": 74.0,
+        "unit": "saco",
+        "category": "outro"
+    }
+]
