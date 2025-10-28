@@ -3,12 +3,13 @@ from files import *
 import random 
 
 
-def clear_screen():
+def clear_screen2():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
 
-
+def clear_screen():
+    print('\033c', end='')
 
 
 def id_gen():

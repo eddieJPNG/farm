@@ -12,8 +12,10 @@ from movements import  *
 
 def menu():
     while True:
+        clear_screen()
 
-        # clear_screen()
+        
+        print("\n")
         print("\nSISTEMA DE FAZENDA DIGITAL EM  PHYTON")
         print("1.Animais")
         print("2.Plantações")
@@ -38,6 +40,8 @@ def menu():
             case "0":
                 print("Saindo...")
                 break
+            case _:
+                print("Opção inválida!")
         
 
 

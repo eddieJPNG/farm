@@ -1,20 +1,31 @@
 from files import load_json, save_json
 
-# ==============================================================
-# Script: animals.py
-# Descrição: Módulo para gerenciamento de animais da fazenda digital.
-# Contém funções para cadastro, listagem, busca e atualização de animais.
-# ==============================================================
+
+# animals.py
+import json
+
+file_path = 'data/animals.json'
+
+def load_animals():
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            animals = json.load(file)
+    except:
+        animals = []
+    return animals
+
+def save_animals(animals):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        json.dump(animals, file, indent=4, ensure_ascii=False)
 
 def register_animal():
-    """Cadastra um novo animal no sistema."""
-    animals = load_json("animals.json")
+    animals = load_animals()
 
     print('=== Cadastro de Animal ===')
     animal_id = input('ID do animal: ')
     species = input('Espécie (ex: bovino, caprino): ')
-    age = float(input('Idade: '))
-    weight = float(input('Peso (kg): '))
+    age = input('Idade: ')
+    weight = input('Peso (kg): ')
     status = input('Status (Ativo, Vendido, Morto): ')
 
     new_animal = {
@@ -30,48 +41,41 @@ def register_animal():
     print('Animal cadastrado com sucesso!')
 
 def list_animals():
-    """Lista todos os animais cadastrados."""
     animals = load_json("animals.json")
 
-    if not animals:
+    if len(animals) == 0:
         print('Nenhum animal cadastrado.')
         return
 
     print('=== Lista de Animais ===')
     for animal in animals:
-        print(f"ID: {animal['id']}, "
-              f"Espécie: {animal['species']}, "
-              f"Idade: {animal['age']}, "
-              f"Peso: {animal['weight']}kg, "
-              f"Status: {animal['status']}")
+        print(f'ID: {animal['id']}, Espécie: {animal['species']}, Idade: {animal['age']}, Peso: {animal['weight']}kg, Status: {animal['status']}')
 
 def search_animal():
-    """Busca um animal pelo ID."""
     animals = load_json("animals.json")
     search_id = input('Digite o ID do animal: ')
 
     for animal in animals:
         if animal['id'] == search_id:
-            print('=== Animal Encontrado ===')
-            print(f"ID: {animal['id']}")
-            print(f"Espécie: {animal['species']}")
-            print(f"Idade: {animal['age']}")
-            print(f"Peso: {animal['weight']}kg")
-            print(f"Status: {animal['status']}")
+            print('=== Animal Encontrado ===\n')
+            print(f'ID: {animal['id']}')
+            print(f'Espécie: {animal['species']}')
+            print(f'Idade: {animal['age']}')
+            print(f'Peso: {animal['weight']}kg')
+            print(f'Status: {animal['status']}')
             return
 
-    print('Animal não encontrado.')
+    print('Animal não encontrado.\n')
 
 def update_status():
-    """Atualiza o status de um animal específico."""
     animals = load_json("animals.json")
     search_id = input('Digite o ID do animal para atualizar: ')
 
     for animal in animals:
         if animal["id"] == search_id:
-            new_status = input('Novo status (active, sold, dead): ')
+            new_status = input('Novo status (Ativo, Vendido, Morto): ')
             animal['status'] = new_status
-            save_json("animals.json", animals)
+            save_json("animals.json")
             print('Status atualizado com sucesso!')
             return
 
