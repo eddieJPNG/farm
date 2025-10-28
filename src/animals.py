@@ -97,3 +97,4 @@ def animals_menu():
                 break
             case _:
                 print("Opção inválida!")
+                
