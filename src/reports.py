@@ -65,6 +65,10 @@ def generate_report():
     total_plants = len(plants)
     total_inputs = len(inputs_)
 
+    path = r"c:\Users\Creche Tia Matilde\Documents\github_repositories\farm\data\reports.txt"
+
+
+
     with open(path, "w", encoding="utf-8") as f:
         f.write("=== RELATÓRIO GERAL DA FAZENDA ===\n")
         f.write(f"Gerado em: {timestamp}\n\n")
