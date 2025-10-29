@@ -1,18 +1,18 @@
 [
     {
-        "id": "p433",
-        "crop_type": "milho",
-        "area": 40.0,
-        "planting_date": "2025-02-07",
-        "harvest_date": "2025-06-07",
-        "status": "inativo"
+        "id": "001",
+        "crop_type": "girassol",
+        "area": 1.0,
+        "planting_date": "1960-10-05",
+        "harvest_date": "1961-02-02",
+        "status": "planted"
     },
     {
-        "id": "p002",
-        "crop_type": "soja",
-        "area": 33.0,
-        "planting_date": "2025-02-03",
-        "harvest_date": "2025-07-03",
+        "id": "002",
+        "crop_type": "arroz",
+        "area": 3.0,
+        "planting_date": "2025-08-19",
+        "harvest_date": "2025-12-17",
         "status": "planted"
     }
 ]

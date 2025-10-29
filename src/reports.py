@@ -1,140 +1,166 @@
 # ==============================================================
 # Script: reports.py
-# Descrição: Gera relatórios gerais da fazenda e permite pesquisa.
+# Descrição: Geração de relatórios do sistema da fazenda digital.
+# Depende de: files.py (para carregar dados JSON)
 # ==============================================================
-import datetime
-from files import *
 
-# ===============================
-# Função: Gerar Relatório Geral
-# ===============================
-def generate_report():
-    print("\n📊 RELATÓRIO GERAL DA FAZENDA")
+from datetime import datetime
+from files import load_json
+import os
 
-    reports = load_json("reports.txt")
-
-    # Carregar dados
-    animals = load_json("animals.json")
-    plants = load_json("plants.json")
-    inputs_ = load_json("inputs.json")
-
-    # Dicionário de dados
-    data = {
-        "Animais": animals,
-        "Plantações": plants,
-        "Insumos": inputs_
-    }
-
-    # Escolher critério de ordenação
-    print("\nOrdenar por:")
-    print("1. Nome/ID (A–Z)")
-    print("2. Quantidade (decrescente)")
-    print("3. Status")
-    order_option = input("Escolha uma opção: ")
-
-    # Ordenar registros
-    for key, items in data.items():
-        if not items:
-            continue
-        match order_option:
-            case "1":
-                if "id" in items[0]:
-                    items.sort(key=lambda x: str(x.get("id", "")).lower())
-            case "2":
-                if "quantity" in items[0]:
-                    items.sort(key=lambda x: x.get("quantity", 0), reverse=True)
-            case "3":
-                if "status" in items[0]:
-                    items.sort(key=lambda x: str(x.get("status", "")).lower())
-        data[key] = items
-
-    # Mostrar na tela
-    for category, items in data.items():
-        print(f"\n== {category} ==")
-        if not items:
-            print("Nenhum registro encontrado.")
-        for item in items:
-            print(item)
-
-    # Gerar relatório JSON
-    save_json("relatorio.json", data)
-
-    # Gerar relatório TXT
-    timestamp = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    total_animals = len(animals)
-    total_plants = len(plants)
-    total_inputs = len(inputs_)
-
-    path = r"c:\Users\Creche Tia Matilde\Documents\github_repositories\farm\data\reports.txt"
+# Caminho padrão onde os relatórios serão salvos
+DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data")
+REPORT_FILE = os.path.join(DATA_PATH, "report.txt")
 
 
-
-    with open(path, "w", encoding="utf-8") as f:
-        f.write("=== RELATÓRIO GERAL DA FAZENDA ===\n")
-        f.write(f"Gerado em: {timestamp}\n\n")
-
-        f.write(f"Total de Animais: {total_animals}\n")
-        f.write(f"Total de Plantações: {total_plants}\n")
-        f.write(f"Total de Insumos: {total_inputs}\n")
-        f.write("\n----------------------------------------\n")
-
-        for category, items in data.items():
-            f.write(f"\n## {category} ##\n")
-            if not items:
-                f.write("Nenhum registro encontrado.\n")
-                continue
-            for item in items:
-                f.write(str(item) + "\n")
-
-    print("\n✅ Relatórios gerados com sucesso:")
-    print("- data/relatorio.json")
-    print("- data/report.txt")
-
-# ===============================
-# Função: Pesquisar Registros
-# ===============================
-def search_record():
-    print("\n🔍 PESQUISA DE REGISTROS")
-    query = input("Digite o ID ou nome a procurar: ").lower()
-
-    databases = {
-        "Animais": load_json("animals.json"),
-        "Plantações": load_json("plants.json"),
-        "Insumos": load_json("inputs.json")
-    }
-
-    found = False
-    for category, records in databases.items():
-        for item in records:
-            if (str(item.get("id", "")).lower() == query or
-                str(item.get("name", "")).lower() == query or
-                str(item.get("species", "")).lower() == query):
-                print(f"\n=== {category} ===")
-                for k, v in item.items():
-                    print(f"{k.capitalize()}: {v}")
-                found = True
-
-    if not found:
-        print("Nenhum registro encontrado.")
-
-# ===============================
-# Menu principal do módulo
-# ===============================
+# --------------------------------------------------------------
+# Função principal de menu
+# --------------------------------------------------------------
 def reports_menu():
     while True:
-        print("\n=== MENU RELATÓRIOS ===")
-        print("1. Gerar relatório geral")
-        print("2. Pesquisar registro")
-        print("0. Voltar ao menu principal")
+        print("\n📊 MENU DE RELATÓRIOS")
+        print("1. Relatório Geral")
+        print("2. Relatório de Animais")
+        print("3. Relatório de Plantações")
+        print("4. Relatório de Insumos")
+        print("5. Voltar ao Menu Principal")
 
-        option = input("Escolha uma opção: ")
+        opcao = input("Escolha uma opção: ")
 
-        match option:
-            case "1":
-                generate_report()
-            case "2":
-                search_record()
-            case "0":
-                break
-            case _:
-                print("Opção inválida!")
+        if opcao == "1":
+            generate_general_report()
+        elif opcao == "2":
+            generate_animals_report()
+        elif opcao == "3":
+            generate_plants_report()
+        elif opcao == "4":
+            generate_inputs_report()
+        elif opcao == "5":
+            break
+        else:
+            print("❌ Opção inválida. Tente novamente.")
+
+
+# --------------------------------------------------------------
+# Funções de geração de relatórios
+# --------------------------------------------------------------
+def generate_animals_report():
+    animals = load_json("animals.json")
+    if not animals:
+        print("⚠️ Nenhum animal cadastrado.")
+        return
+
+    criterio = input("Ordenar por [1] ID ou [2] Espécie: ")
+    if criterio == "2":
+        animals.sort(key=lambda x: x.get("species", "").lower())
+    else:
+        animals.sort(key=lambda x: x.get("id", ""))
+
+    print("\n🐄 RELATÓRIO DE ANIMAIS")
+    print("-" * 50)
+    for a in animals:
+        print(f"ID: {a['id']} | Espécie: {a['species']} | "
+              f"Peso: {a['weight']}kg | Idade: {a['age']} | Status: {a['status']}")
+
+    total = len(animals)
+    ativos = sum(1 for a in animals if a['status'] == 'active')
+    vendidos = sum(1 for a in animals if a['status'] == 'sold')
+    mortos = sum(1 for a in animals if a['status'] == 'dead')
+
+    print(f"\nTotal: {total} | Ativos: {ativos} | Vendidos: {vendidos} | Mortos: {mortos}")
+    save_report_to_file("Relatório de Animais", animals)
+
+
+def generate_plants_report():
+    plants = load_json("plants.json")
+    if not plants:
+        print("⚠️ Nenhuma plantação cadastrada.")
+        return
+
+    criterio = input("Ordenar por [1] ID ou [2] Tipo de cultura: ")
+    if criterio == "2":
+        plants.sort(key=lambda x: x.get("crop_type", "").lower())
+    else:
+        plants.sort(key=lambda x: x.get("id", ""))
+
+    print("\n🌾 RELATÓRIO DE PLANTAÇÕES")
+    print("-" * 50)
+    for p in plants:
+        print(f"ID: {p['id']} | Cultura: {p['crop_type']} | Área: {p['area']}ha | "
+              f"Plantio: {p['planting_date']} | Colheita: {p['harvest_date']} | Status: {p['status']}")
+
+    total = len(plants)
+    plantadas = sum(1 for p in plants if p['status'] == 'planted')
+    colhidas = sum(1 for p in plants if p['status'] == 'harvested')
+
+    print(f"\nTotal: {total} | Plantadas: {plantadas} | Colhidas: {colhidas}")
+    save_report_to_file("Relatório de Plantações", plants)
+
+
+def generate_inputs_report():
+    inputs = load_json("inputs.json")
+    if not inputs:
+        print("⚠️ Nenhum insumo registrado.")
+        return
+
+    criterio = input("Ordenar por [1] Nome ou [2] Quantidade: ")
+    if criterio == "2":
+        inputs.sort(key=lambda x: x.get("quantity", 0), reverse=True)
+    else:
+        inputs.sort(key=lambda x: x.get("name", "").lower())
+
+    print("\n🧱 RELATÓRIO DE INSUMOS")
+    print("-" * 50)
+    for i in inputs:
+        print(f"ID: {i['id']} | Nome: {i['name']} | "
+              f"Qtd: {i['quantity']} {i['unit']} | Categoria: {i['category']}")
+
+    total = len(inputs)
+    print(f"\nTotal de insumos: {total}")
+    save_report_to_file("Relatório de Insumos", inputs)
+
+
+def generate_general_report():
+    animals = load_json("animals.json")
+    plants = load_json("plants.json")
+    inputs = load_json("inputs.json")
+
+    print("\n📋 RELATÓRIO GERAL DA FAZENDA")
+    print("-" * 50)
+    print(f"Animais cadastrados: {len(animals)}")
+    print(f"Plantações registradas: {len(plants)}")
+    print(f"Insumos disponíveis: {len(inputs)}")
+
+    resumo = {
+        "Total de Animais": len(animals),
+        "Total de Plantações": len(plants),
+        "Total de Insumos": len(inputs),
+    }
+
+    save_report_to_file("Relatório Geral da Fazenda", resumo)
+
+
+
+def save_report_to_file(title, data):
+    try:
+        if not os.path.exists(DATA_PATH):
+            os.makedirs(DATA_PATH)
+
+        with open(REPORT_FILE, "a", encoding="utf-8") as f:
+            f.write(f"\n{'=' * 60}\n")
+            f.write(f"{title}\nGerado em: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\n")
+            f.write(f"{'=' * 60}\n")
+
+            if isinstance(data, list):
+                for item in data:
+                    for chave, valor in item.items():
+                        f.write(f"{chave}: {valor}\n")
+                    f.write("-" * 40 + "\n")
+            else:
+                for chave, valor in data.items():
+                    f.write(f"{chave}: {valor}\n")
+
+            f.write("\n")
+        print(f"✅ Relatório salvo com sucesso em: {REPORT_FILE}")
+    except OSError as e:
+        print(f"❌ Erro ao salvar relatório: {e}")
