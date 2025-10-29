@@ -28,6 +28,7 @@ def register_plantation():
     area = float(input('Área cultivada (hectares): '))
     planting_date = input('Data de plantio (YYYY-MM-DD): ')
     
+    
     harvest_date = calculate_harvest_date(crop_type, planting_date)
     
     new_plantation = {

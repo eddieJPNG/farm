@@ -1,3 +1,10 @@
 [
-   
+    {
+        "id": "0001",
+        "crop_type": "milho",
+        "area": 40.0,
+        "planting_date": "2025-03-05",
+        "harvest_date": "2025-07-03",
+        "status": "planted"
+    }
 ]

@@ -18,7 +18,8 @@ def movements_menu():
             case "3":
                 break
             case _:
-                print("Opção inválida, tente novamente.")
+                print("Opção inválida!")
+                input("Pressione ENTER para continuar...")
 
 def register_movement():
     try:

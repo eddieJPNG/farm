@@ -27,18 +27,22 @@ def reports_menu():
 
         opcao = input("Escolha uma opção: ")
 
-        if opcao == "1":
-            generate_general_report()
-        elif opcao == "2":
-            generate_animals_report()
-        elif opcao == "3":
-            generate_plants_report()
-        elif opcao == "4":
-            generate_inputs_report()
-        elif opcao == "5":
-            break
-        else:
-            print("❌ Opção inválida. Tente novamente.")
+        match opcao:
+            case "1":
+                generate_general_report()
+            case "2":
+                generate_animals_report()
+            case "3":
+                generate_plants_report()
+            case "4":
+                generate_inputs_report()
+            case "5":
+                break
+            case _:
+                print("Opção inválida!")
+                input("Pressione ENTER para continuar...")
+        
+            
 
 
 # --------------------------------------------------------------
@@ -164,3 +168,5 @@ def save_report_to_file(title, data):
         print(f"✅ Relatório salvo com sucesso em: {REPORT_FILE}")
     except OSError as e:
         print(f"❌ Erro ao salvar relatório: {e}")
+
+
