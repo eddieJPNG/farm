@@ -1,59 +1,45 @@
-from files import load_json, save_json
-from datetime import datetime
+from files import *
+from datetime import datetime, date, time, timedelta
 
 def movements_menu():
     while True:
-        print("\nMOVEMENTS MENU")
-        print("1. Register movement")
-        print("2. List movements")
-        print("3. Back")
+        print("\nMENU DE MOVIMENTAÇÕES")
+        print("1. Registrar movimentação")
+        print("2. Listar movimentações")
+        print("3. Voltar")
+        op = input("Escolha: ")
 
-        choice = input("Choose an option: ")
-
-        match choice:
+        match op:
             case "1":
-                register_movement()
+                registrar_movimento()
             case "2":
-                list_movements()
+                listar_movimentos()
             case "3":
                 break
             case _:
-                print("Invalid option, try again.")
+                print("Opção inválida!")
 
-def register_movement():
-    try:
-        data = load_json("movements.json")
+def registrar_movimento():
+    data = load_json("movements.json")
+    tipo = input("Tipo (Venda/Colheita/Consumo): ")
+    descricao = input("Descrição: ")
+    valor = input("Valor ou quantidade: ")
 
-        mov_type = input("Type (Sale/Harvest/Consume): ")
-        description = input("Description: ")
-        value = input("Value or quantity: ")
+    data_atual = str(datetime.now())
+    data.append({
+        "tipo": tipo,
+        "descricao": descricao,
+        "valor": valor,
+        "data": data_atual,
+    })
 
-        movement = {
-            "type": mov_type,
-            "description": description,
-            "value": value,
-            "date": datetime.now().strftime("%d/%m/%Y %H:%M")
-        }
+    save_json("movements.json", data)
+    print("✅ Movimentação registrada!")
 
-        data.append(movement)
-        save_json("movements.json", data)
-
-        print("✅ Movement registered successfully!")
-
-    except Exception as e:
-        print(f"Error registering movement: {e}")
-
-def list_movements():
-    try:
-        data = load_json("movements.json")
-
-        if not data:
-            print("No movements registered.")
-            return
-
-        print("\n--- MOVEMENTS LIST ---")
+def listar_movimentos():
+    data = load_json("movements.json")
+    if not data:
+        print("Nenhuma movimentação registrada.")
+    else:
         for m in data:
-            print(f"{m['date']} - {m['type']}: {m['description']} ({m['value']})")
-
-    except Exception as e:
-        print(f"Error listing movements: {e}")
+            print(f"- {m['tipo']}: {m['descricao']} ({m['valor']})")
