@@ -1,13 +1,6 @@
 from files import load_json, save_json
-
-
-# animals.py
 import json
 
-
-def save_animals(animals):
-    with open(animals, 'w', encoding='utf-8') as file:
-        json.dump(animals, file, indent=4, ensure_ascii=False)
 
 def register_animal():
     animals = load_json("animals.json")
@@ -66,14 +59,14 @@ def update_status():
         if animal["id"] == search_id:
             new_status = input('Novo status (Ativo, Vendido, Morto): ')
             animal['status'] = new_status
-            save_json("animals.json")
+            save_json("animals.json", animal )
             print('Status atualizado com sucesso!')
             return
 
     print('Animal não encontrado')
 
 def animals_menu():
-    """Menu principal do módulo de animais."""
+    
     while True:
         print("\n=== MENU ANIMAIS ===")
         print("1. Cadastrar animal")

@@ -68,7 +68,7 @@ def update_stock():
                 
                 if operation == 'entrada':
                     item['quantity'] += amount
-                    save_json(inputs)
+                    save_json("inputs.json", inputs)
                     print('Entrada registrada com sucesso!')
                     
                 elif operation == 'saída':

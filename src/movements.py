@@ -6,7 +6,7 @@ def movements_menu():
         print("\nMENU DE MOVIMENTAÇÕES")
         print("1. Registrar movimentação")
         print("2. Listar movimentações")
-        print("3. Voltar")
+        print("0. Voltar")
 
         option = input("Escolha uma opção: ")
 
@@ -15,7 +15,7 @@ def movements_menu():
                 register_movement()
             case "2":
                 list_movements()
-            case "3":
+            case "0":
                 break
             case _:
                 print("Opção inválida!")

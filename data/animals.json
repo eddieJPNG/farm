@@ -1,9 +1,7 @@
-[
-    {
-        "id": "4444",
-        "species": "Caprino",
-        "age": "7",
-        "weight": "56",
-        "status": "Morto"
-    }
-]
+[{
+    "id": "1111",
+    "species": "bovino",
+    "age": "5",
+    "weight": "89",
+    "status": "Morto"
+}]

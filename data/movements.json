@@ -1,2 +1,8 @@
 [
+    {
+        "type": "Venda",
+        "description": "Vendi um boi para o seu zé",
+        "amount": "5000,00",
+        "date": "29/10/2025 22:07"
+    }
 ]

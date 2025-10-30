@@ -6,5 +6,13 @@
         "planting_date": "2025-03-05",
         "harvest_date": "2025-07-03",
         "status": "planted"
+    },
+    {
+        "id": "1111",
+        "crop_type": "arroz",
+        "area": 20.0,
+        "planting_date": "2025-05-08",
+        "harvest_date": "2025-09-05",
+        "status": "rotacionado"
     }
 ]

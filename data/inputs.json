@@ -1,2 +1,9 @@
 [
+    {
+        "id": "1111",
+        "name": "Kaiser III",
+        "quantity": 100.0,
+        "unit": "saco",
+        "category": "outro"
+    }
 ]

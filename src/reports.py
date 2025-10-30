@@ -1,21 +1,11 @@
-# ==============================================================
-# Script: reports.py
-# Descrição: Geração de relatórios do sistema da fazenda digital.
-# Depende de: files.py (para carregar dados JSON)
-# ==============================================================
-
 from datetime import datetime
 from files import load_json
 import os
 
-# Caminho padrão onde os relatórios serão salvos
 DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data")
 REPORT_FILE = os.path.join(DATA_PATH, "report.txt")
 
 
-# --------------------------------------------------------------
-# Função principal de menu
-# --------------------------------------------------------------
 def reports_menu():
     while True:
         print("\n📊 MENU DE RELATÓRIOS")
@@ -23,7 +13,7 @@ def reports_menu():
         print("2. Relatório de Animais")
         print("3. Relatório de Plantações")
         print("4. Relatório de Insumos")
-        print("5. Voltar ao Menu Principal")
+        print("0. Voltar ao Menu Principal")
 
         opcao = input("Escolha uma opção: ")
 
@@ -36,18 +26,13 @@ def reports_menu():
                 generate_plants_report()
             case "4":
                 generate_inputs_report()
-            case "5":
+            case "0":
                 break
             case _:
                 print("Opção inválida!")
                 input("Pressione ENTER para continuar...")
         
             
-
-
-# --------------------------------------------------------------
-# Funções de geração de relatórios
-# --------------------------------------------------------------
 def generate_animals_report():
     animals = load_json("animals.json")
     if not animals:

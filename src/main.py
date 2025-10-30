@@ -1,3 +1,8 @@
+# Edson Rocha da Silva - 2025012382
+# Cauã Caetano Feitosa - 2025027518
+# Jonnatas da Costa Silva - 2025012408 
+# Marcos Vinicius Mendes de Carvalho - 2025031790
+
 from utils import  *
 from files import  *
 from animals import  *
@@ -42,34 +47,7 @@ def menu():
                 break
             case _:
                 print("Opção inválida!")
-        
-
-
-
     
-
-        
-
-
-
-        # if option == "1":
-        #     animals_menu()
-        # elif option == "2":
-        #     plants_menu()
-        # elif option == "3":
-        #     inputs_menu()
-        # elif option == "4":
-        #     moviments_menu()
-        # elif option == "5":
-        #     reports_menu()
-        # elif option == "0":
-        #     print("Saindo...")
-            
-           
-        #     break
-        # else:
-            # print("Opção invalida!")
-            # input("Pressione ENTER para tentar novamente!")
            
 if __name__ == "__main__":
     menu()
